@@ -83,11 +83,19 @@ class Play extends Phaser.Scene{
             this.scene.restart();
         }
 
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start("menuScene");
+          }
+
         this.starfield.tilePositionX -=4;
-        this.p1Rocket.update();
-        this.ship01.update();
-        this.ship02.update();
-        this.ship03.update();
+
+        //GAME OVER CONDITIONAL
+        if(!this.gameOver){
+            this.p1Rocket.update(); //updates rocket sprite
+            this.ship01.update();   //updates spaceship 3x
+            this.ship02.update();
+            this.ship03.update();
+        }
 
         //colllision checker
         if(this.checkCollision(this.p1Rocket, this.ship03)){
@@ -103,13 +111,7 @@ class Play extends Phaser.Scene{
             this.shipExplode(this.ship01);
         }
         
-        //GAME OVER CONDITIONAL
-        if(!this.gameOver){
-            this.p1Rocket.update(); //updates rocket sprite
-            this.ship01.update();   //updates spaceship 3x
-            this.ship02.update();
-            this.ship03.update();
-        }
+
     }
     checkCollision(rocket, ship){
         //simple AABB checking
